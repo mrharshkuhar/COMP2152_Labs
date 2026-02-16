@@ -1,203 +1,175 @@
-# Week 05 Lab: Recursion & Functions - Starter Code
-# COMP2152 - Python Programming
+# Lab 04: Loops and Functions Practice
+# Student Name: Harsh 
+# Date: 15-02-2026
 
-print("=" * 60)
-print("WEEK 05 LAB: RECURSION & FUNCTIONS")
-print("=" * 60)
-
-# ============================================================
-# Question 1: Fibonacci Number (LeetCode #509)
-# Concepts: Recursion, base case, recursive case
-# ============================================================
+# ============================================
+# Question 1: Robot Return to Origin
+# ============================================
 print("\n" + "=" * 50)
-print("Question 1: Fibonacci Number (#509)")
+print("Question 1: Robot Return to Origin")
+print("=" * 50)
+def robot_returns_to_origin(moves):
+    # Initialize starting position
+    x = 0
+    y = 0
+
+    # Loop through each move and update x, y
+    for move in moves:
+        if move == "U":
+            y = y+1 #y+=1
+        elif move == "D":
+            y = y-1 #y -= 1
+        elif move == "R":
+            x = x+1 #x+=1
+        elif move == "L":
+            x = x-1 #x -= 1
+# Return True if back at origin, False otherwise
+    return x == 0 and y == 0
+
+
+
+# Test cases
+test_moves = ["UD", "LL", "UDLR", "LDRRLRUULR"]
+
+for moves in test_moves:
+    result = robot_returns_to_origin(moves)
+    print("Moves '" + moves + "': Returns to origin? " + str(result))
+
+
+
+# ============================================
+# Question 2: Two Sum
+# ============================================
+
+print("\n" + "=" * 50)
+print("Question 2: Two Sum")
 print("=" * 50)
 
+# Part A: Brute Force with Nested Loops
+def two_sum_brute_force(numbers, target):
+    # TODO: Use nested loops to find the pair
+    # Outer loop: i from 0 to len(numbers)
+    for i in range(len(numbers) ) :
+    # Inner loop: j from i+1 to len(numbers)
+        for j in range(i+1, len(numbers) ) :
+            if numbers [i] + numbers [j] == target:
+                return (i, j)
+    return None
 
-def fib(n): 
-    if n == 0:
-        return 0
-    if n == 1:
-        return 1
-    return fib(n - 1) + fib(n - 2)
+    
+
+# Part B: Optimized with Dictionary
+def two_sum_optimized(numbers, target):
+    seen = {}  # Dictionary to store {number: index}
+    # Loop through numbers, check if needed value exists in seen
+    for i in range(len(numbers) ) :
+        needed = target - numbers [i]
+        if needed in seen:
+            return (seen [needed], i)
+        seen [numbers [i]] = i
+    return None
 
 
-# Test cases for Fibonacci
-print("Fibonacci Sequence (F(0) to F(10)):")
-print("-" * 30)
-for i in range(11):
-    result = fib(i)
-    print("F(" + str(i) + ") = " + str(result))
+# Test cases
+test_cases = [
+    ([2, 7, 11, 15], 9),
+    ([3, 2, 4], 6),
+    ([3, 3], 6),
+    ([1, 5, 3, 8, 2], 10)
+]
 
-print("\nAdditional test cases:")
-print("F(15) = " + str(fib(15)))
-print("F(20) = " + str(fib(20)))
+print("=== Part A: Brute Force (Nested Loops) ===")
+for numbers, target in test_cases:
+    result = two_sum_brute_force(numbers, target)
+    print("Numbers: " + str(numbers) + ", Target: " + str(target))
+    print("Result: " + str(result))
+    print()
 
+print("=== Part B: Optimized (Dictionary) ===")
+for numbers, target in test_cases:
+    result = two_sum_optimized(numbers, target)
+    print("Numbers: " + str(numbers) + ", Target: " + str(target))
+    print("Result: " + str(result))
+    print()
 
-# ============================================================
-# Question 2: FizzBuzz (LeetCode #412)
-# Concepts: Functions, conditionals, list building
-# ============================================================
+# ============================================
+# Question 3: Shuffle the Array
+# ============================================
 print("\n" + "=" * 50)
-print("Question 2: FizzBuzz (#412)")
+print("Question 3: Shuffle the Array")
 print("=" * 50)
 
+def shuffle_array(nums, n):
+    # Step 1: Split into two halves using slicing
+    first_half = nums[:n]    # slice from start to n
+    second_half = nums[n:]   # slice from n to end
 
-def fizz_buzz(n):
+    # Step 2: Create empty result list
     result = []
-    # Loop from 1 to n (inclusive)
-    # Hint: Use range(1, n + 1)
-    for i in range(1, n+1):
-        # Check if divisible by BOTH 3 and 5 FIRST
-        # Hint: if i % 3 == 0 and i % 5 == 0
-        if i % 3 == 0 and i % 5 == 0:
-            result.append("FizzBuzz")
-        # Then check if divisible by 3 only
-        elif i % 3 == 0:
-            result.append("Fizz")
-        # Then check if divisible by 5 only
-        elif i % 5 == 0:
-            result.append("Buzz")
-        # Otherwise, append the number as a string
-        # Hint: result.append(str(i))
-        else:
-            result.append(str(i))
+
+    # Step 3: Interleave using a for loop
+    # Loop through range(n) and append alternating elements
+    for i in range(n):
+        result. append(first_half [i])
+        result. append (second_half [i] )
+
     return result
 
+# Test cases
+test_cases = [
+    ([2, 5, 1, 3, 4, 7], 3),
+    ([1, 2, 3, 4, 4, 3, 2, 1], 4),
+    ([1, 1, 2, 2], 2)
+]
 
-# Test cases for FizzBuzz
-print("\nTest Case 1: n = 3")
-result = fizz_buzz(3)
-print("Output: " + str(result))
-print("Expected: ['1', '2', 'Fizz']")
+for nums, n in test_cases:
+    print("Original: " + str(nums))
+    print("n = " + str(n))
 
-print("\nTest Case 2: n = 5")
-result = fizz_buzz(5)
-print("Output: " + str(result))
-print("Expected: ['1', '2', 'Fizz', '4', 'Buzz']")
+    # Show the slices
+    print("First half (nums[:" + str(n) + "]): " + str(nums[:n]))
+    print("Second half (nums[" + str(n) + ":]): " + str(nums[n:]))
 
-print("\nTest Case 3: n = 15")
-result = fizz_buzz(15)
-print("Output: " + str(result))
-print("Expected: ['1', '2', 'Fizz', '4', 'Buzz', 'Fizz', '7', '8', 'Fizz', 'Buzz', '11', 'Fizz', '13', '14', 'FizzBuzz']")
+    # Get result
+    result = shuffle_array(nums, n)
+    print("Shuffled: " + str(result))
+    print()
 
-print("\nTest Case 4: n = 1")
-result = fizz_buzz(1)
-print("Output: " + str(result))
-print("Expected: ['1']")
-
-
-# ============================================================
-# Question 3: Binary Search (LeetCode #704)
-# Concepts: Divide & Conquer, Iterative and Recursive
-# ============================================================
+# ============================================
+# Question 4: First Unique Character
+# ============================================
 print("\n" + "=" * 50)
-print("Question 3: Binary Search (#704)")
+print(" Question 4: First Unique Character")
 print("=" * 50)
-
-
-# Part A: Iterative Solution
-def binary_search_iterative(nums, target):
-    left = 0
-    right = len(nums) -1
-    while left <= right:
-        mid = (left + right ) // 2
-        if nums[mid] == target:
-            return mid
-        elif target < nums[mid]:
-            right = mid - 1
+def count_characters(s) :
+    counts = {}
+    for char in s:
+        if char in counts: # e = 1 === > e=2 ==== > e=3 # leetcode
+            counts [char] += 1
         else:
-            left = mid + 1
+            counts [char] = 1
+    return counts
+
+def first_unique_character(s) :
+    char_counts = count_characters (s)
+    for i in range(len(s) ) :
+        if char_counts [s[i]] == 1:
+            return i
     return -1
 
 
-# Part B: Recursive Solution
-def binary_search_recursive(nums, target, left, right):
-    if left > right:
-        return -1
-    mid = (left + right ) // 2
-    if nums[mid] == target:
-        return mid
-    if target < nums[mid]:
-     return binary_search_recursive(nums, target, left, mid - 1)
-    return binary_search_recursive(nums, target, mid + 1, right)
-   
+# Test cases
+test_strings = ["leetcode", "loveleetcode", "aabb", "python", "aabbcc"]
 
-# Wrapper function for recursive solution
-def search_recursive(nums, target):
-    """Wrapper function to call recursive binary search."""
-    if len(nums) == 0:
-        return -1
-    return binary_search_recursive(nums, target, 0, len(nums) - 1)
+for s in test_strings:
+    index = first_unique_character(s)
 
+    if index != -1:
+        print("First unique character in '" + s + "': index " + str(index) + " (character: '" + s[index] + "')")
+    else:
+        print("First unique character in '" + s + "': index -1 (no unique character)")
 
-# Test cases for Binary Search
-print("\n--- Part A: Iterative Binary Search ---")
-test_cases = [
-    ([-1, 0, 3, 5, 9, 12], 9),
-    ([-1, 0, 3, 5, 9, 12], 2),
-    ([1], 1),
-    ([1, 2, 3, 4, 5], 1),
-    ([1, 2, 3, 4, 5], 5),
-    ([1, 2, 3, 4, 5], 3),
-    ([], 5),
-]
-
-for nums, target in test_cases:
-    result = binary_search_iterative(nums, target)
-    print("nums=" + str(nums) + ", target=" + str(target) + " -> index: " + str(result))
-
-print("\n--- Part B: Recursive Binary Search ---")
-for nums, target in test_cases:
-    result = search_recursive(nums, target)
-    print("nums=" + str(nums) + ", target=" + str(target) + " -> index: " + str(result))
-
-
-# ============================================================
-# Verification: Both methods should give same results
-# ============================================================
-print("\n" + "=" * 50)
-print("Verification: Both Methods Should Match")
-print("=" * 50)
-
-nums = [-1, 0, 3, 5, 9, 12]
-print("Array: " + str(nums))
-print("-" * 40)
-
-for target in [-1, 0, 3, 5, 9, 12, 2, 100]:
-    iter_result = binary_search_iterative(nums, target)
-    rec_result = search_recursive(nums, target)
-    match = "PASS" if iter_result == rec_result else "FAIL"
-    print("Target " + str(target).rjust(4) + ": Iterative=" + str(iter_result).rjust(2) + ", Recursive=" + str(rec_result).rjust(2) + " " + match)
-
-
-# ============================================================
-# Summary
-# ============================================================
-print("\n" + "=" * 60)
-print("COMPLETE THE TODO SECTIONS ABOVE!")
-print("=" * 60)
-print("""
-Key Concepts to Practice:
-
-1. FIBONACCI (Recursion)
-   - Two base cases: F(0)=0, F(1)=1
-   - Recursive case: F(n) = F(n-1) + F(n-2)
-   - Each call moves toward base case
-
-2. FIZZBUZZ (Functions)
-   - Function with parameter and return value
-   - Conditional logic (if/elif/else)
-   - Building and returning a list
-   - Order of conditions matters!
-
-3. BINARY SEARCH (Divide & Conquer)
-   - Iterative: while loop with left/right pointers
-   - Recursive: base case + recursive calls
-   - O(log n) time complexity
-   - Array MUST be sorted!
-
-Connection to Grokking Algorithms:
-- Binary Search: Chapter 1
-- Recursion: Chapter 3
-""")
+    # Show the character counts for understanding
+    counts = count_characters(s)
+    print("  Character counts: " + str(counts))
+    print()
